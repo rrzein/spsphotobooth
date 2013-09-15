@@ -17,6 +17,55 @@ section {
   top: 150px;
 }
 
+h1 {
+  text-transform: uppercase;
+}
+
+.connect h1, .connect h3 {
+  color: #3B5998;
+}
+
+.fbconnect {
+  display: inline-block;
+  background: #3B5998;
+  text-decoration: none;
+  padding: 3px 10px;
+  a {
+    color: white;
+    &:visited {
+      color:white;
+    }
+  }
+}
+
+form.email-input {
+  display: inline-block;
+}
+
+header h3 {
+  margin: 10px 10px;
+  padding: 5px;
+  color: #CDCDCD
+}
+
+.logout {
+  display: inline-block;
+  background: #CDCDCD;
+  padding: 3px 15px;
+  margin-left: 10px;
+  a {
+    text-decoration: none;
+    color: white;
+    &:visited {
+      color: white;
+    }
+  }
+}
+
+h1, .more {
+  color: #3B5998;
+}
+
 #photos {
   position: relative;
   width: 80%;
@@ -52,4 +101,26 @@ section {
   cursor: pointer;
   bottom: -10%;
   right: 5%;
+}
+
+h3 .sendphotos {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #00FF7F;
+  a {
+    text-decoration: none !important;
+    color: white !important;
+    &:visited {
+      color: white !important;
+    }
+  }
+}
+
+h3 a {
+  text-decoration: none;
+  color: white;
+  &:visited {
+    color: white;
+  }
 }

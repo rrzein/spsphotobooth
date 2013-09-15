@@ -79,7 +79,6 @@ App.Views.Email = Backbone.View.extend({
       data: data,
       type: "POST",
       success: function(res) {
-        // that.logout();
         App.Store.Router.navigate("/emailExit", {trigger: true})
       },
     });
