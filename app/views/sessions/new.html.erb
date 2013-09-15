@@ -1,0 +1,15 @@
+<script type="text/javascript">
+    $(window).load(function() {
+      FB.init({appId: '639929902730301', cookie: true});
+      FB.getLoginStatus(function(response) {
+        if (response.authResponse) {
+          FB.logout();
+        }
+      });
+    });
+</script>
+<section>
+  <h1>People of Adweek</h1>
+  <a id="login" href="/auth/facebook">Connect To Facebook</a>
+  <p>Or Enter Email: <form action="/session/email" method="post" class="email-input"><input type="text" class="email" name="email"></form></p>
+</section>

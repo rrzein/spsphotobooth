@@ -1,0 +1,9 @@
+
+You have received photos taken at the Social Print Studio Photobooth.
+Follow the links below to view the photos:
+<% @images.each do |image_id| %>
+<% image_url = Photo.find(image_id).url %>
+<%= image_url %>
+<% end %>
+Warm regards,
+Social Print Studio
