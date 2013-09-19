@@ -58,6 +58,27 @@ App.Views.Root = Backbone.View.extend({
     e.preventDefault();
     var photoID = $(e.target).closest('.photo').data('id');
     var photo = App.Store.photos.get(photoID);
+
+    var params = {};
+    //var msg = document.getElementById('user_message').value;
+    var msg = 'hello! this is a post from #facebookadweek';
+    var url = '/me/spsphotobooth:take' +
+      '?portrait=http://alexhimel.com/jsphotos/index.php' +
+      '&fb:explicitly_shared=1' +
+      '&image[0][user_generated]=true' +
+      '&image[0][url]='+photo.get('url');
+    if (msg) {
+      url += '&message=' + encodeURIComponent(msg);
+    }
+    FB.api(url, 'post', params, function(response) {
+      if (!response || response.error) {
+        console.log(response.error);
+      } else {
+        alert('Published to stream!');
+      }
+    });
+
+    /*
     FB.ui(
       {
         method: 'feed',
@@ -73,6 +94,7 @@ App.Views.Root = Backbone.View.extend({
         };
       }
     );
+    */
   },
 
   logoutFBUser: function(e) {
