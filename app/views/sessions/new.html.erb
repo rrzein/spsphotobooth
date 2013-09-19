@@ -1,0 +1,15 @@
+<script type="text/javascript">
+    $(window).load(function() {
+      FB.init({appId: '639929902730301', cookie: true});
+      FB.getLoginStatus(function(response) {
+        if (response.authResponse) {
+          FB.logout();
+        }
+      });
+    });
+</script>
+<section class="connect">
+  <h1>Share Your Portrait</h1>
+  <h1 class="fbconnect"><a id="login" href="/auth/facebook" class="fbconnect">Sign In With Facebook</a></h1>
+  <h3>Or Enter Email: <form action="/session/email" method="post" class="email-input"><input type="text" class="email" name="email"></form></h3>
+</section>

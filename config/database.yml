@@ -1,0 +1,13 @@
+development:
+  adapter: postgresql
+  database: spsphotobooth_dev
+  host: localhost
+  pool: 5
+  timeout: 5000
+
+test:
+  adapter: postgresql
+  database: spsphotobooth_test
+  host: localhost
+  pool: 5
+  timeout: 5000

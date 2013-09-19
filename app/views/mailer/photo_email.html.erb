@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <p>You have received photos taken at the Social Print Studio Photobooth.</p>
+    <p>Follow the links below to view the photos:</p>
+    <% @images.each do |image_id| %>
+    <% image_url = Photo.find(image_id).url %>
+    <p><%= image_url %></p>
+    <% end %>
+    <p>Warm regards,</p>
+    <p>Social Print Studio</p>
+  </body>
+</html>
