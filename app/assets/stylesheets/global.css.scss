@@ -10,11 +10,21 @@ html, body {
   clear: both;
 }
 
+.status {
+  width: 75%;position: fixed;left: 50%;margin: 0 0 0 -37.5%;
+  text-align: center;
+  display: block;
+}
+
+.posting, .post-success, .post-failed {
+  display: none;
+}
+
 section {
   text-align: center;
   position: relative;
   margin: auto;
-  top: 150px;
+  top: 120px;
 }
 
 h1 {

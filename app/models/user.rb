@@ -12,6 +12,15 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.save_from_email_session(email)
+    user = self.where(:name => email).first
+    unless user
+      user = self.new
+      user.name = email
+      user.save!
+    end
+  end
+
   def facebook
     @facebook ||= Koala::Facebook::API.new(self.oauth_token)
   end

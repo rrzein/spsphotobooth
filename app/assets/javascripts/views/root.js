@@ -56,14 +56,13 @@ App.Views.Root = Backbone.View.extend({
 
   sharePhoto: function(e) {
     e.preventDefault();
+    this.postingFlash();
+    var that = this;
     var photoID = $(e.target).closest('.photo').data('id');
     var photo = App.Store.photos.get(photoID);
-<<<<<<< HEAD
-=======
-
     var params = {};
     //var msg = document.getElementById('user_message').value;
-    var msg = 'hello! this is a post from #facebookadweek';
+    var msg = 'Posted on #facebookadweek';
     var url = '/me/spsphotobooth:take' +
       '?portrait=http://alexhimel.com/jsphotos/index.php' +
       '&fb:explicitly_shared=1' +
@@ -74,33 +73,14 @@ App.Views.Root = Backbone.View.extend({
     }
     FB.api(url, 'post', params, function(response) {
       if (!response || response.error) {
-        console.log(response.error);
+        that.switchStatus('.post-failed');
       } else {
-        alert('Published to stream!');
+        that.switchStatus('.post-success');
+        window.setTimeout(function() {
+          App.Store.Router.navigate("/exit", {trigger: true});
+        }, 3000);
       }
     });
-
-    /*
->>>>>>> 643d23d38c9285a083cfad5c37a8a06d0d58dc21
-    FB.ui(
-      {
-        method: 'feed',
-        name: "Facebook Portaits",
-        link: photo.get('url'),
-        caption: "A portrait of me.",
-        description: "Taken at the Facebook event.",
-        picture: photo.get('url'),
-      },
-      function(response) { 
-        if (response && response.post_id) {
-          App.Store.Router.navigate("#/exit", {trigger: true});
-        };
-      }
-    );
-<<<<<<< HEAD
-=======
-    */
->>>>>>> 643d23d38c9285a083cfad5c37a8a06d0d58dc21
   },
 
   logoutFBUser: function(e) {
@@ -123,6 +103,24 @@ App.Views.Root = Backbone.View.extend({
         App.Store.Router.navigate("/session/new", {trigger: true});
       }
     })
+  },
+
+  flashText: function(selector) {
+    $(selector).css(
+      {
+        display: "block",
+        opacity: ".8", 
+      }).animate({opacity: ".05"}, 10)
+        .animate({opacity: "1"}, 200);
+  },
+
+  postingFlash: function() {
+    this.flashText('.posting');
+  },
+
+  switchStatus: function(newStatusSelector) {
+    $('.posting').css({display: "none"});
+    this.flashText(newStatusSelector);
   },
 
 });

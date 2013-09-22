@@ -7,11 +7,7 @@ class Photo < ActiveRecord::Base
   after_create :upload_photo
 
   def self.query_new_photos
-<<<<<<< HEAD
-    @files = Dir.glob("public/photos/*.{jpg, jpeg}")
-=======
     @files = Dir.glob("public/photos/*.{jpg, JPG, jpeg, JPEG}")
->>>>>>> 643d23d38c9285a083cfad5c37a8a06d0d58dc21
     @files.each do |file|
       filename = File.basename(file)
       localpath = "photos/" + filename

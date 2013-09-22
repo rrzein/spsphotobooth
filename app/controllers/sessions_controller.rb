@@ -28,6 +28,7 @@ class SessionsController < ApplicationController
 
   def email
     session[:email] = params[:email]
+    User.save_from_email_session(params[:email])
     redirect_to "/#email"
   end
 
