@@ -5,7 +5,8 @@ App.Views.Root = Backbone.View.extend({
   events: {
     "click .logout": "logoutFBUser",
     "click .more": "appendDivs",
-    "click .photo": "sharePhoto"
+    "click .photo": "sharePhoto",
+    "keypress .caption": "enterCaption"
   },
 
   render: function() {
@@ -54,15 +55,31 @@ App.Views.Root = Backbone.View.extend({
     }
   },
 
+  enterCaption: function(e) {
+    if (e.which == 13 || e.keyCode == 13) {
+      this.captionText = $('.caption').val();
+      this.switchStatus('.caption-input', '.posting');
+      this.submitFacebook();
+      return false;
+    }
+    return true;
+  },
+
   sharePhoto: function(e) {
     e.preventDefault();
-    this.postingFlash();
+    $('.selected').toggleClass('selected');
+    $(e.target).closest(".photo").toggleClass("selected");
     var that = this;
-    var photoID = $(e.target).closest('.photo').data('id');
-    var photo = App.Store.photos.get(photoID);
+    this.photoID = $(e.target).closest('.photo').data('id');
+    this.captionShow();
+    return true;
+  },
+
+  submitFacebook: function() {
+    var that = this;
+    var photo = App.Store.photos.get(this.photoID);
     var params = {};
-    //var msg = document.getElementById('user_message').value;
-    var msg = 'Posted on #facebookadweek';
+    var msg = this.captionText;
     var url = '/me/spsphotobooth:take' +
       '?portrait=http://alexhimel.com/jsphotos/index.php' +
       '&fb:explicitly_shared=1' +
@@ -73,13 +90,26 @@ App.Views.Root = Backbone.View.extend({
     }
     FB.api(url, 'post', params, function(response) {
       if (!response || response.error) {
-        that.switchStatus('.post-failed');
+        that.switchStatus('.posting', '.post-failed');
+        that.sendEmail();
       } else {
-        that.switchStatus('.post-success');
-        window.setTimeout(function() {
-          App.Store.Router.navigate("/exit", {trigger: true});
-        }, 3000);
+        that.switchStatus('.posting', '.post-success');
+        that.sendEmail();
+        App.Store.Router.navigate("/exit", {trigger: true});
       }
+    });
+  },
+
+  sendEmail: function() {
+    var that = this;
+    var data = {images: this.photoID};
+    $.ajax({
+      url: "/email",
+      data: data,
+      type: "POST",
+      success: function(res) {
+        App.Store.Router.navigate("/emailExit", {trigger: true})
+      },
     });
   },
 
@@ -114,12 +144,16 @@ App.Views.Root = Backbone.View.extend({
         .animate({opacity: "1"}, 200);
   },
 
+  captionShow: function() {
+    this.flashText('.caption-input');
+  },
+
   postingFlash: function() {
     this.flashText('.posting');
   },
 
-  switchStatus: function(newStatusSelector) {
-    $('.posting').css({display: "none"});
+  switchStatus: function(oldStatusSelector, newStatusSelector) {
+    $(oldStatusSelector).css({display: "none"});
     this.flashText(newStatusSelector);
   },
 

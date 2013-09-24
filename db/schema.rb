@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130913162611) do
+ActiveRecord::Schema.define(:version => 20130924015859) do
 
   create_table "photos", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(:version => 20130913162611) do
     t.string   "uid"
     t.string   "oauth_token"
     t.datetime "oauth_expires_at"
+    t.string   "email"
   end
 
 end

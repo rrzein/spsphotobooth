@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
       user.provider = auth.provider
       user.uid = auth.uid
       user.name = auth.info.name
+      user.email = auth.info.email
       user.oauth_token = auth.credentials.token
       user.oauth_expires_at = Time.at(auth.credentials.expires_at)
       user.save!
@@ -16,7 +17,7 @@ class User < ActiveRecord::Base
     user = self.where(:name => email).first
     unless user
       user = self.new
-      user.name = email
+      user.email = email
       user.save!
     end
   end
